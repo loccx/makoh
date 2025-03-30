@@ -43,3 +43,18 @@ select up to 3 tiles to swap out
 button to submit hand
     callback to submit
 return point count
+
+deck needs:
+    keep track of count, and if empty, change sprite
+
+hand needs:
+    keep track of combinations
+    keep track of winning or not
+
+
+animation manager??
+move_tile_to(Tile tile,vector2f destination, float time);
+discard_tile(Tile tile);
+
+was considering making tilecontainer but that seems to be overengineering;
+    i think i only need the flop and the hand

@@ -1,8 +1,7 @@
-#include "ui/textures.hpp"
-#include "utils/path_utils.hpp"
 #include <format>
 
-std::unordered_map<std::string, std::unique_ptr<sf::Texture>> Textures::m_textures;
+#include "ui/textures.hpp"
+#include "utils/path_utils.hpp"
 
 sf::Texture& Textures::load(const std::string& filename) {
     if (auto it = m_textures.find(filename); it != m_textures.end()) {
@@ -28,5 +27,6 @@ void Textures::preload(std::initializer_list<std::string> filenames) {
 }
 
 void Textures::clear() noexcept {
+    std::lock_guard<std::mutex> lock(m_mutex);
     m_textures.clear();
 }

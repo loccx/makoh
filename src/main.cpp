@@ -17,42 +17,28 @@
  * runs game window
  */
 int main() {
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "makoh", sf::Style::Default, sf::State::Fullscreen);
+    sf::err().rdbuf(std::cerr.rdbuf());
 
-    std::deque<Tile> deck;
-    std::vector<Tile> hand;
-
-    /*
-     * texture loading
-     */
     Textures textures;
-    /*
-    auto tong_textures;
-    auto wan_textures;
-    auto wind_textures;
-    auto dragon_textures;
-    auto flower_textures;
-    */
     Fonts fonts;
-
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "makoh", sf::Style::Default, sf::State::Fullscreen);
     /*
      * controller
      */
     GameController controller(window, textures, fonts);
 
-    /*
-     * shuffle deque
-     */
-    controller.shuffleDeck();
-
     while (window.isOpen()) {
         while (auto event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
+                textures.clear();
+                fonts.clear();
                 window.close();
             }
             else if (event->is<sf::Event::KeyPressed>()) {
                 if (auto keyEvent = event->getIf<sf::Event::KeyPressed>()) {
                     if (keyEvent->code == sf::Keyboard::Key::Escape) {
+                        textures.clear();
+                        fonts.clear();
                         window.close();
                     }
                 }

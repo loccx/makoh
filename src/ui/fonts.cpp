@@ -1,8 +1,7 @@
-#include "ui/fonts.hpp"
-#include "utils/path_utils.hpp"
 #include <format>
 
-std::unordered_map<std::string, std::unique_ptr<sf::Font>> Fonts::m_fonts;
+#include "ui/fonts.hpp"
+#include "utils/path_utils.hpp"
 
 /*
  * retrieves font from map if exists, otherwise insert to map
@@ -31,6 +30,7 @@ void Fonts::preload(std::initializer_list<std::string> filenames) {
 }
 
 void Fonts::clear() noexcept {
+    std::lock_guard<std::mutex> lock(m_mutex);
     m_fonts.clear();
 }
 

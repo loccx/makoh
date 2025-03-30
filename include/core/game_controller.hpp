@@ -22,7 +22,7 @@ public:
     void update(float deltaTime);
     void render();
     
-    void dealCard();
+    void dealContainer(std::vector<Tile>& tileContainer, float y_pos, const float& constraint);
     void shuffleDeck();
 
 private:
@@ -33,8 +33,11 @@ private:
     
     std::deque<Tile> deck_;
     std::vector<Tile> hand_;
+    std::vector<Tile> flop_;
     
-    void initDeck_();
     void initUI_();
-    void positionHand_(float y_offset);
+    void initDeck_();
+
+    void dealTile(std::vector<Tile>& tileContainer, float& y_pos, const float& constraint);
+    void positionContainer_(std::vector<Tile>& tileContainer, float y_offset);
 };

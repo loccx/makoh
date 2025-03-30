@@ -5,10 +5,9 @@ enum class Type {
 };
 
 enum class Direction {
-    WEST, NORTH, EAST, SOUTH
+    DONG, NANN, XI, BEI
 };
 
 enum class Dragon {
-    RED, GREEN, WHITE
+    ZHONG, FU, PI
 };
-

@@ -19,6 +19,11 @@ public:
         validate();
     }
 
+    explicit Tile(sf::Texture& texture, Direction direction)
+    : skin(texture), m_type(Type::WIND), m_direction(direction) {
+        validate();
+    }
+
     void draw(sf::RenderTarget& target) const {
         target.draw(skin);
     }

@@ -2,12 +2,10 @@
 #include <stdexcept>
 
 void Tile::validate() const {
-    // Validate texture
     if (skin.getTexture().getSize() == sf::Vector2u(0, 0)) {
         throw std::runtime_error("Tile has no texture assigned!");
     }
 
-    // Validate type-specific constraints
     switch (m_type) {
         case Type::TONG:
         case Type::WAN:
@@ -53,7 +51,9 @@ void Tile::validate() const {
 bool Tile::isNumberValid(int num) const {
     switch (m_type) {
         case Type::TONG:
+            return (num >= 1 && num <= 9);
         case Type::WAN:
+            return (num >= 1 && num <= 9);
         case Type::TIAO:
             return (num >= 1 && num <= 9);
         default:
