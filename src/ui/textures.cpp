@@ -2,15 +2,16 @@
 #include "utils/path_utils.hpp"
 #include <format>
 
+std::unordered_map<std::string, std::unique_ptr<sf::Texture>> Textures::m_textures;
+
 sf::Texture& Textures::load(const std::string& filename) {
-    // Check if already loaded
     if (auto it = m_textures.find(filename); it != m_textures.end()) {
         return *it->second;
     }
     
-    const std::string path = std::format("textures/{}", filename);
+    const std::string path = std::format("textures/{}.png", filename);
     auto texture = std::make_unique<sf::Texture>();
-    
+   
     if (!texture->loadFromFile(Resource::resources(path))) {
         throw std::runtime_error(std::format("Failed to load texture: {}", path));
     }

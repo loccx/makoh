@@ -246,6 +246,30 @@ src/ui/button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/ui/button.cpp.s
 .PHONY : src/ui/button.cpp.s
 
+src/ui/fonts.o: src/ui/fonts.cpp.o
+.PHONY : src/ui/fonts.o
+
+# target to build an object file
+src/ui/fonts.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/ui/fonts.cpp.o
+.PHONY : src/ui/fonts.cpp.o
+
+src/ui/fonts.i: src/ui/fonts.cpp.i
+.PHONY : src/ui/fonts.i
+
+# target to preprocess a source file
+src/ui/fonts.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/ui/fonts.cpp.i
+.PHONY : src/ui/fonts.cpp.i
+
+src/ui/fonts.s: src/ui/fonts.cpp.s
+.PHONY : src/ui/fonts.s
+
+# target to generate assembly for a file
+src/ui/fonts.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/ui/fonts.cpp.s
+.PHONY : src/ui/fonts.cpp.s
+
 src/ui/textures.o: src/ui/textures.cpp.o
 .PHONY : src/ui/textures.o
 
@@ -316,6 +340,9 @@ help:
 	@echo "... src/ui/button.o"
 	@echo "... src/ui/button.i"
 	@echo "... src/ui/button.s"
+	@echo "... src/ui/fonts.o"
+	@echo "... src/ui/fonts.i"
+	@echo "... src/ui/fonts.s"
 	@echo "... src/ui/textures.o"
 	@echo "... src/ui/textures.i"
 	@echo "... src/ui/textures.s"

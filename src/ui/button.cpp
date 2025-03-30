@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "button.hpp"
+#include "ui/button.hpp"
 
 Button::Button(const sf::Vector2f& position, 
               const sf::Texture& texture, 
@@ -32,24 +32,33 @@ void Button::draw(sf::RenderTarget& target) const {
 }
 
 void Button::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
-    if (!event.is<sf::Event::MouseButtonPressed>) break;
-    auto& mouseEvent = event;
-
-    sf::Vector2f mousePos = window.mapPixelToCoords(mouseEvent.position);
-    
-    if (sprite.getGlobalBounds().contains(mousePos)) {
-        state = State::HOVERED;
-        sprite.setTexture(*hoverTexture, true);
-
+    if (event.is<sf::Event::MouseButtonPressed>()) {
+        const auto& mouseEvent = *event.getIf<sf::Event::MouseButtonPressed>();
+        
         if (mouseEvent.button == sf::Mouse::Button::Left) {
-            std::cout << "pressed\n";
-            state = State::PRESSED;
-            sprite.setTexture(*activeTexture, true);
-            if (callback) callback();
+            sf::Vector2f mousePos = window.mapPixelToCoords(mouseEvent.position);
+            
+            if (sprite.getGlobalBounds().contains(mousePos)) {
+                state = State::PRESSED;
+                sprite.setTexture(*activeTexture, true);
+                
+                if (callback) {
+                    callback();
+                }
+            }
         }
-    } else {
-        state = State::IDLE;
-        sprite.setTexture(*idleTexture, true);
+    }
+    else if (event.is<sf::Event::MouseMoved>()) {
+        const auto& mouseEvent = *event.getIf<sf::Event::MouseMoved>();
+        sf::Vector2f mousePos = window.mapPixelToCoords(mouseEvent.position);
+        
+        if (sprite.getGlobalBounds().contains(mousePos)) {
+            state = State::HOVERED;
+            sprite.setTexture(*hoverTexture, true);
+        } else {
+            state = State::IDLE;
+            sprite.setTexture(*idleTexture, true);
+        }
     }
 }
 

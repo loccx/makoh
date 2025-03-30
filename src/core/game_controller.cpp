@@ -2,8 +2,10 @@
 
 GameController::GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts) 
     : window_(window), textures_(textures), fonts_(fonts) {
-    initDeck_();
-    initUI_();
+        assert(&textures != nullptr);
+        assert(&fonts != nullptr);
+        initDeck_();
+        initUI_();
 }
 
 void GameController::handleEvent(const sf::Event& event) {
@@ -36,7 +38,7 @@ void GameController::render() {
     window_.display();
 }
 
-void GameController::dealCards() {
+void GameController::dealCard() {
     if (deck_.empty() || hand_.size() >= Constants::HANDSIZE) return;
     
     hand_.push_back(deck_.front());
@@ -64,7 +66,6 @@ void GameController::initDeck_() {
  *    link controller functions callbacks to buttons
  */
 void GameController::initUI_() {
-    // Create deal button
     auto dealButton = std::make_unique<Button>(
         sf::Vector2f(100, 100), 
         textures_.load("deal_button"), 
@@ -72,12 +73,19 @@ void GameController::initUI_() {
         fonts_.load("balatro")
     );
     
-    // Set callback using lambda
     dealButton->setOnClick([this]() {
-        this->dealCards();
+        this->dealCard();
     });
+
+    auto testButton = std::make_unique<Button>(
+        sf::Vector2f(500, 500),
+        textures_.load("key"),
+        "fuck you",
+        fonts_.load("balatro")
+    );
     
     buttons_.push_back(std::move(dealButton));
+    buttons_.push_back(std::move(testButton));
 }
 
 /*
@@ -94,7 +102,6 @@ void GameController::positionHand_(float y_offset) {
     }
     total_width -= tile_hand_spacing;
 
-    std::cout << window_.getSize().x << ' ' << window_.getSize().y << std::endl;
     float startX = (window_.getSize().x - total_width) / 2.f;
     float y_pos = (window_.getSize().y - max_height - y_offset);
     float curr_x = startX;
@@ -103,4 +110,3 @@ void GameController::positionHand_(float y_offset) {
         curr_x += tile.getWidth() + tile_hand_spacing;
     }
 }
-

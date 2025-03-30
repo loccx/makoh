@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/locc/git/makoh/src/core/game_controller.cpp" "CMakeFiles/game.dir/src/core/game_controller.cpp.o" "gcc" "CMakeFiles/game.dir/src/core/game_controller.cpp.o.d"
   "/Users/locc/git/makoh/src/main.cpp" "CMakeFiles/game.dir/src/main.cpp.o" "gcc" "CMakeFiles/game.dir/src/main.cpp.o.d"
   "/Users/locc/git/makoh/src/ui/button.cpp" "CMakeFiles/game.dir/src/ui/button.cpp.o" "gcc" "CMakeFiles/game.dir/src/ui/button.cpp.o.d"
+  "/Users/locc/git/makoh/src/ui/fonts.cpp" "CMakeFiles/game.dir/src/ui/fonts.cpp.o" "gcc" "CMakeFiles/game.dir/src/ui/fonts.cpp.o.d"
   "/Users/locc/git/makoh/src/ui/textures.cpp" "CMakeFiles/game.dir/src/ui/textures.cpp.o" "gcc" "CMakeFiles/game.dir/src/ui/textures.cpp.o.d"
   "/Users/locc/git/makoh/src/ui/tile.cpp" "CMakeFiles/game.dir/src/ui/tile.cpp.o" "gcc" "CMakeFiles/game.dir/src/ui/tile.cpp.o.d"
   )

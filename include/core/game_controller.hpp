@@ -17,24 +17,20 @@ class GameController {
 public:
     explicit GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts);
     
-    // Event handling
     void handleEvent(const sf::Event& event);
     
-    // Game loop methods
     void update(float deltaTime);
     void render();
     
-    // Game actions
-    void dealCards();
+    void dealCard();
     void shuffleDeck();
 
 private:
     sf::RenderWindow& window_;
     std::vector<std::unique_ptr<Button>> buttons_;
-    Textures textures_;
-    Fonts fonts_;
+    Textures& textures_;
+    Fonts& fonts_;
     
-    // Game state
     std::deque<Tile> deck_;
     std::vector<Tile> hand_;
     

@@ -6,7 +6,7 @@
 
 class Tile {
 public:
-    Tile() = delete;    
+    Tile() = delete;
 
     explicit Tile(sf::Texture& texture, Type type = Type::NONE, 
                 std::optional<int> number = std::nullopt)
@@ -64,19 +64,6 @@ private:
     std::optional<Dragon> m_dragon;
     std::optional<Direction> m_direction;
 
-    void validate() const {
-        if (skin.getTexture().getSize() == sf::Vector2u(0, 0)) {
-            throw std::runtime_error("Tile has no valid texture");
-        }
-        
-        if (m_type == Type::NONE && (m_number || m_dragon || m_direction)) {
-            throw std::logic_error("NONE type cannot have other properties");
-        }
-    }
-    
-    bool isNumberValid(int num) const {
-        return (m_type == Type::TONG || m_type == Type::WAN || m_type == Type::TIAO) 
-               ? (num >= 1 && num <= 9)
-               : (num == 0 || !num);
-    }
+    void validate() const;
+    bool isNumberValid(int num) const;
 };

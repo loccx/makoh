@@ -2,19 +2,20 @@
 #include "utils/path_utils.hpp"
 #include <format>
 
+std::unordered_map<std::string, std::unique_ptr<sf::Font>> Fonts::m_fonts;
+
 /*
  * retrieves font from map if exists, otherwise insert to map
  */
-sf::Font& Fonts::load(std::string_view filename) {
-    auto it = m_fonts.find(filename);
-    if (it != m_fonts.end()) {
+sf::Font& Fonts::load(const std::string& filename) {
+    if (auto it = m_fonts.find(filename); it != m_fonts.end()) {
         return *it->second;
     }
     
-    const std::string path = std::format("fonts/{}", filename);
+    const std::string path = std::format("fonts/{}.ttf", filename);
     auto font = std::make_unique<sf::Font>();
 
-    if (!font->loadFromFile(Resoource::resources(path))) {
+    if (!font->openFromFile(Resource::resources(path))) {
         throw std::runtime_error(std::string("Failed to load font: ") + filename.data());
     }
     
@@ -23,10 +24,7 @@ sf::Font& Fonts::load(std::string_view filename) {
     return ref;
 }
 
-/*
- * initializer list of file names to load
- */
-void Fonts::preload(std::initializer_list<std::string_view> filenames) {
+void Fonts::preload(std::initializer_list<std::string> filenames) {
     for (auto filename : filenames) {
         load(filename);
     }

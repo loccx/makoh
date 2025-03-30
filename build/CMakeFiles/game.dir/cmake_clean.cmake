@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/game.dir/src/main.cpp.o.d"
   "CMakeFiles/game.dir/src/ui/button.cpp.o"
   "CMakeFiles/game.dir/src/ui/button.cpp.o.d"
+  "CMakeFiles/game.dir/src/ui/fonts.cpp.o"
+  "CMakeFiles/game.dir/src/ui/fonts.cpp.o.d"
   "CMakeFiles/game.dir/src/ui/textures.cpp.o"
   "CMakeFiles/game.dir/src/ui/textures.cpp.o.d"
   "CMakeFiles/game.dir/src/ui/tile.cpp.o"
