@@ -1,0 +1,7 @@
+/Users/locc/git/makoh/build/CMakeFiles/game.dir
+/Users/locc/git/makoh/build/CMakeFiles/edit_cache.dir
+/Users/locc/git/makoh/build/CMakeFiles/rebuild_cache.dir
+/Users/locc/git/makoh/build/CMakeFiles/list_install_components.dir
+/Users/locc/git/makoh/build/CMakeFiles/install.dir
+/Users/locc/git/makoh/build/CMakeFiles/install/local.dir
+/Users/locc/git/makoh/build/CMakeFiles/install/strip.dir
