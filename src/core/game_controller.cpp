@@ -2,8 +2,8 @@
 
 #include "core/game_controller.hpp"
 
-GameController::GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts) 
-    : window_(window), textures_(textures), fonts_(fonts) {
+GameController::GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts, std::unordered_set<GameState> activeStates) 
+    : window_(window), textures_(textures), fonts_(fonts), activeStates(std::move(activeStates)) {
         assert(&textures != nullptr);
         assert(&fonts != nullptr);
         initDeck_();
@@ -18,13 +18,28 @@ void GameController::handleEvent(const sf::Event& event) {
         window_.close();
         return;
     }
+    /*
+    pipes events to buttons, buttons handle clicking on button to trigger event
+    */
     for (auto& button : buttons_) {
-        button->handleEvent(event, window_);
+        if (button.isValidState(currState_)) {
+            button->handleEvent(event, window_);
+        }
+    }
+    /*
+    handle based on state, for clicking tiles
+    */
+    if (currState_ == GameState::SWAPPING) {
+
     }
 }
 
 void GameController::update(float deltaTime) {
     // Update game state (animations, timers, etc.)
+    switch (currentState_) {
+        case GameState::MAINMENU:
+
+    }
 }
 
 void GameController::render() {
@@ -38,7 +53,9 @@ void GameController::render() {
     }
 
     for (const auto& button : buttons_) {
-        button->draw(window_);
+        if (button.isValidState(currState_)) {
+            button->draw(window_);
+        }
     }
 
     window_.display();
@@ -86,7 +103,7 @@ void GameController::initUI_() {
     });
 
     auto dealFlopButton = std::make_unique<Button>(
-        sf::Vector2f(500, 100), 
+        sf::Vector2f(1400, 600), 
         textures_.load("deal_flop_button"), 
         "hit me.", 
         fonts_.load("balatro")
@@ -94,6 +111,14 @@ void GameController::initUI_() {
     dealFlopButton->setOnClick([this]() {
         this->dealContainer(flop_, Constants::FLOP_YPOS, Constants::FLOPSIZE);
     });
+
+    // auto swapTilesButton
+    /*
+    swapTilesButton->setOnClick([this]() {
+        this->swapTiles(flop_, hand_)
+    })
+    */
+    // auto judgeHandButton
 
     buttons_.push_back(std::move(dealHandButton));
     buttons_.push_back(std::move(dealFlopButton));

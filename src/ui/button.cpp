@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ui/button.hpp"
 
 Button::Button(const sf::Vector2f& position, 
