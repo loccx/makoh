@@ -2,8 +2,8 @@
 
 #include "core/game_controller.hpp"
 
-GameController::GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts, std::unordered_set<GameState> activeStates) 
-    : window_(window), textures_(textures), fonts_(fonts), activeStates(std::move(activeStates)) {
+GameController::GameController(sf::RenderWindow& window, Textures& textures, Fonts& fonts) 
+    : window_(window), textures_(textures), fonts_(fonts), tileSelector_(3) {
         assert(&textures != nullptr);
         assert(&fonts != nullptr);
         initDeck_();
@@ -18,27 +18,51 @@ void GameController::handleEvent(const sf::Event& event) {
         window_.close();
         return;
     }
+
+    switch (currState_) {
+        case GameState::MAINMENU:
+            // just play button handles this
+            break;
+        case GameState::DEALING:
+            // deal button handles this
+            break;
+        case GameState::SWAPPING:
+            // any click during this state, we pass as event, to see if a tile is clicked
+            if (event.is<sf::Event::MouseButtonPressed>()) {
+                sf::Vector2f mousecoords = window_.mapPixelToCoords(event.getIf<sf::Event::MouseButtonPressed>()->position);
+                tileSelector_.selectTiles(mousecoords, hand_, flop_);
+            }
+        case GameState::SCORING:
+            // handled by score button
+            break;
+        default:
+            break;
+    }
+
     /*
     pipes events to buttons, buttons handle clicking on button to trigger event
     */
     for (auto& button : buttons_) {
-        if (button.isValidState(currState_)) {
+        if (button->isValidState(currState_)) {
             button->handleEvent(event, window_);
+            return;
         }
-    }
-    /*
-    handle based on state, for clicking tiles
-    */
-    if (currState_ == GameState::SWAPPING) {
-
     }
 }
 
 void GameController::update(float deltaTime) {
     // Update game state (animations, timers, etc.)
-    switch (currentState_) {
+    switch (currState_) {
         case GameState::MAINMENU:
-
+            break;
+        case GameState::DEALING:
+            if (hand_.size() == Constants::HANDSIZE) {
+                setState(GameState::SWAPPING);
+            }
+        case GameState::SWAPPING:
+            break;
+        case GameState::SCORING:
+            break;
     }
 }
 
@@ -53,12 +77,20 @@ void GameController::render() {
     }
 
     for (const auto& button : buttons_) {
-        if (button.isValidState(currState_)) {
+        if (button->isValidState(currState_)) {
             button->draw(window_);
         }
     }
 
     window_.display();
+}
+
+void GameController::setState(GameState newState) {
+    currState_ = newState;
+}
+
+GameState GameController::getState() const {
+    return currState_;
 }
 
 /*
@@ -91,12 +123,23 @@ void GameController::shuffleDeck() {
 void GameController::initUI_() {
     //TODO
     // initDeckUI();
+    auto startGameButton = std::make_unique<Button>(
+        sf::Vector2f(window_.getSize().x / 2, window_.getSize().y / 2), 
+        textures_.load("start_game_button"), 
+        "playyy", 
+        fonts_.load("balatro"),
+        std::vector<GameState>{GameState::MAINMENU}
+    );
+    startGameButton->setOnClick([this]() {
+        setState(GameState::DEALING);
+    });
 
     auto dealHandButton = std::make_unique<Button>(
         sf::Vector2f(100, 100), 
         textures_.load("deal_hand_button"), 
         "deal me!", 
-        fonts_.load("balatro")
+        fonts_.load("balatro"),
+        std::vector<GameState>{GameState::DEALING}
     );
     dealHandButton->setOnClick([this]() {
         this->dealContainer(hand_, Constants::HAND_YPOS, Constants::HANDSIZE);
@@ -106,22 +149,30 @@ void GameController::initUI_() {
         sf::Vector2f(1400, 600), 
         textures_.load("deal_flop_button"), 
         "hit me.", 
-        fonts_.load("balatro")
+        fonts_.load("balatro"),
+        std::vector<GameState>{GameState::DEALING, GameState::SWAPPING}
     );
     dealFlopButton->setOnClick([this]() {
         this->dealContainer(flop_, Constants::FLOP_YPOS, Constants::FLOPSIZE);
     });
 
-    // auto swapTilesButton
-    /*
+    auto swapTilesButton = std::make_unique<Button>(
+        sf::Vector2f(100, 600),
+        textures_.load("swap_tiles_button"),
+        "swap!!",
+        fonts_.load("balatro"),
+        std::vector<GameState>{GameState::SWAPPING}
+    );
     swapTilesButton->setOnClick([this]() {
-        this->swapTiles(flop_, hand_)
-    })
-    */
-    // auto judgeHandButton
+        tileSelector_.swapTiles(hand_, flop_);
+    });
 
+    // auto judgeHandButton, state scoring
+
+    buttons_.push_back(std::move(startGameButton));
     buttons_.push_back(std::move(dealHandButton));
     buttons_.push_back(std::move(dealFlopButton));
+    buttons_.push_back(std::move(swapTilesButton));
 }
 
 void GameController::initDeck_() {

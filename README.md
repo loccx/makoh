@@ -58,3 +58,7 @@ discard_tile(Tile tile);
 
 was considering making tilecontainer but that seems to be overengineering;
     i think i only need the flop and the hand
+
+using vector over unorderedset for some of these operations since linear scan on such small sets of data should be faster than the constant overhead of hashing
+
+optimize tile selection with bitset viable tbh

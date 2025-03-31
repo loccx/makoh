@@ -54,7 +54,7 @@ elseif(WIN32)
     add_custom_command(TARGET game POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${RESOURCES_DIR}
-            $<TARGET_FILE_DIR:game>/resources
+            $<TARGET_FILE_DIR:game>/ources
     )
 endif()
 

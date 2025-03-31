@@ -10,17 +10,17 @@ public:
 
     explicit Tile(sf::Texture& texture, Type type = Type::NONE, 
                 std::optional<int> number = std::nullopt)
-        : skin(texture), m_type(type), m_number(number) {
+        : skin(texture), m_type(type), m_number(number), selected(false) {
         validate();
     }
     
     explicit Tile(sf::Texture& texture, Dragon dragon)
-        : skin(texture), m_type(Type::DRAGON), m_dragon(dragon) {
+        : skin(texture), m_type(Type::DRAGON), m_dragon(dragon), selected(false)  {
         validate();
     }
 
     explicit Tile(sf::Texture& texture, Direction direction)
-    : skin(texture), m_type(Type::WIND), m_direction(direction) {
+    : skin(texture), m_type(Type::WIND), m_direction(direction), selected(false)  {
         validate();
     }
 
@@ -62,12 +62,25 @@ public:
         m_direction = dir;
     }
 
+    /*
+    check mouse click on tile
+    */
+    bool contains(sf::Vector2f& mouseCoords) {
+        return skin.getGlobalBounds().contains(mouseCoords);
+    }
+
+    void setSelected(bool toggle) {
+        selected = toggle;
+    }
+
 private:
     sf::Sprite skin;
     Type m_type = Type::NONE;
     std::optional<int> m_number;
     std::optional<Dragon> m_dragon;
     std::optional<Direction> m_direction;
+
+    bool selected;
 
     void validate() const;
     bool isNumberValid(int num) const;

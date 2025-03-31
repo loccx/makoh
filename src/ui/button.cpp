@@ -3,9 +3,11 @@
 Button::Button(const sf::Vector2f& position, 
               const sf::Texture& texture, 
               const std::string& label, 
-              const sf::Font& font)
+              const sf::Font& font,
+              std::vector<GameState> activeStates)
     : sprite(texture),
-      text(font, label, 20)
+      text(font, label, 20),
+      activeStates(std::move(activeStates))
 {
     setTextures(texture, texture, texture);
 

@@ -47,7 +47,8 @@ int main() {
             controller.handleEvent(*event);
         }
 
-        // controller.update();
+        // time not implemented / needed yet
+        controller.update(0);
         controller.render();
     }
 

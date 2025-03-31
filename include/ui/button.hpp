@@ -1,8 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
 #include <functional>
 #include <memory>
+#include <vector>
+
+#include "utils/states.hpp"
 
 class Button {
 public:
@@ -10,7 +14,7 @@ public:
            const sf::Texture& texture, 
            const std::string& label, 
            const sf::Font& font,
-           std::unordered_set<GameState> activeStates
+           std::vector<GameState> activeStates
     );
 
     void draw(sf::RenderTarget& target) const;
@@ -22,14 +26,17 @@ public:
                     const sf::Texture& active);
 
     bool isValidState(GameState gameState) {
-        return activeStates.count(gameState);
+        for (auto& activeState : activeStates) {
+            if (gameState == activeState) return true;
+        }
+        return false;
     }
 
 private:
     sf::Sprite sprite;
     sf::Text text;
     std::function<void()> callback;
-    std::unordered_set<GameState> activeStates;
+    std::vector<GameState> activeStates;
 
     enum class State { IDLE, HOVERED, PRESSED };
     State state = State::IDLE;

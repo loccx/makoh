@@ -1,4 +1,4 @@
-#pragma on
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -11,14 +11,9 @@
 #include "ui/tile.hpp"
 #include "ui/textures.hpp"
 #include "ui/fonts.hpp"
+#include "ui/tile_selector.hpp"
 #include "utils/constants.hpp"
-
-enum class GameState {
-    MAINMENU,
-    DEALING,
-    SWAPPING,
-    SCORING
-}
+#include "utils/states.hpp"
 
 class GameController {
 public:
@@ -44,6 +39,7 @@ private:
     std::deque<Tile> deck_;
     std::vector<Tile> hand_;
     std::vector<Tile> flop_;
+    TileSelector tileSelector_;
     
     void initUI_();
     void initDeck_();
