@@ -45,7 +45,6 @@ void GameController::handleEvent(const sf::Event& event) {
     for (auto& button : buttons_) {
         if (button->isValidState(currState_)) {
             button->handleEvent(event, window_);
-            return;
         }
     }
 }
@@ -86,6 +85,7 @@ void GameController::render() {
 }
 
 void GameController::setState(GameState newState) {
+    std::cout << "GameState changed to: " << static_cast<int>(currState_) << "\n";
     currState_ = newState;
 }
 
@@ -97,6 +97,8 @@ GameState GameController::getState() const {
 point of this is to just loop the deal tile until a container is full
 */
 void GameController::dealContainer(std::vector<Tile>& tileContainer, float y_pos, const float& constraint) {
+    tileSelector_.clearSelections();
+    tileContainer.clear(); // resets container because used to deal flop only tbh
     while (tileContainer.size() < constraint) {
         dealTile(tileContainer, y_pos, constraint);
     }
@@ -126,7 +128,7 @@ void GameController::initUI_() {
     auto startGameButton = std::make_unique<Button>(
         sf::Vector2f(window_.getSize().x / 2, window_.getSize().y / 2), 
         textures_.load("start_game_button"), 
-        "playyy", 
+        "play", 
         fonts_.load("balatro"),
         std::vector<GameState>{GameState::MAINMENU}
     );
@@ -153,6 +155,7 @@ void GameController::initUI_() {
         std::vector<GameState>{GameState::DEALING, GameState::SWAPPING}
     );
     dealFlopButton->setOnClick([this]() {
+        std::cout << "flop button clicked! Current state: " << static_cast<int>(currState_) << "\n";
         this->dealContainer(flop_, Constants::FLOP_YPOS, Constants::FLOPSIZE);
     });
 
@@ -164,6 +167,7 @@ void GameController::initUI_() {
         std::vector<GameState>{GameState::SWAPPING}
     );
     swapTilesButton->setOnClick([this]() {
+        std::cout << "swap button clicked! Current state: " << static_cast<int>(currState_) << "\n";
         tileSelector_.swapTiles(hand_, flop_);
     });
 

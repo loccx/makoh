@@ -42,6 +42,8 @@ public:
     float getWidth() const { return getSize().x; }
     float getHeight() const { return getSize().y; }
 
+    sf::Vector2f getPosition() const { return skin.getPosition(); };
+
     // setters
     void setPosition(float x, float y) { skin.setPosition({x, y}); }
     void setType(Type type) { m_type = type; }
