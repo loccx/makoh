@@ -16,12 +16,12 @@ public:
         std::vector<Tile>& flop_
     );
     void swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_);
+    void clearSelections();
 
 private:
     std::unordered_set<Tile*> selectedHand_;
     std::unordered_set<Tile*> selectedFlop_;
     int selectLimit;
 
-    void clearSelections();
     bool validSwap() const;
 };

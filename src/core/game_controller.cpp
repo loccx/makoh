@@ -61,7 +61,9 @@ void GameController::update(float deltaTime) {
         case GameState::SWAPPING:
             break;
         case GameState::SCORING:
-            break;
+            if (deck_.size() == 0) {
+                setState(GameState::SCORING);
+            }
     }
 }
 
@@ -99,7 +101,7 @@ point of this is to just loop the deal tile until a container is full
 void GameController::dealContainer(std::vector<Tile>& tileContainer, float y_pos, const float& constraint) {
     tileSelector_.clearSelections();
     tileContainer.clear(); // resets container because used to deal flop only tbh
-    while (tileContainer.size() < constraint) {
+    while (tileContainer.size() < constraint && deck_.size() > 0) {
         dealTile(tileContainer, y_pos, constraint);
     }
 }
