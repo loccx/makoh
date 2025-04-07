@@ -40,6 +40,7 @@ private:
     std::vector<Tile> hand_;
     std::vector<Tile> flop_;
     TileSelector tileSelector_;
+    Scorer scorer_;
     
     void initUI_();
     void initDeck_();

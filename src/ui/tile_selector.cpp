@@ -50,8 +50,8 @@ void TileSelector::selectTiles(sf::Vector2f& mouseCoords, std::vector<Tile>& han
               << ", FLOP: " << selectedFlop_.size() << "\n";
 }
 
-void TileSelector::swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_) {
-    if (!validSwap()) return;
+bool TileSelector::swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_) {
+    if (!validSwap()) return false;
 
     auto handIterator = selectedHand_.begin();
     auto flopIterator = selectedFlop_.begin();
@@ -74,6 +74,7 @@ void TileSelector::swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_)
         flopIterator++;
     }
     clearSelections();
+    return true;
 }
 
 void TileSelector::clearSelections() {

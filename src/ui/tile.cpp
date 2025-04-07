@@ -56,6 +56,8 @@ bool Tile::isNumberValid(int num) const {
             return (num >= 1 && num <= 9);
         case Type::TIAO:
             return (num >= 1 && num <= 9);
+        case Type::FLOWER:
+            return (num >= 1 && num <= 4);
         default:
             return false;
     }

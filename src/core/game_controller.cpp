@@ -9,6 +9,7 @@ GameController::GameController(sf::RenderWindow& window, Textures& textures, Fon
         initDeck_();
         shuffleDeck();
         initUI_();
+        scorer_(hand_);
 }
 
 void GameController::handleEvent(const sf::Event& event) {
@@ -50,7 +51,6 @@ void GameController::handleEvent(const sf::Event& event) {
 }
 
 void GameController::update(float deltaTime) {
-    // Update game state (animations, timers, etc.)
     switch (currState_) {
         case GameState::MAINMENU:
             break;
@@ -170,10 +170,27 @@ void GameController::initUI_() {
     );
     swapTilesButton->setOnClick([this]() {
         std::cout << "swap button clicked! Current state: " << static_cast<int>(currState_) << "\n";
-        tileSelector_.swapTiles(hand_, flop_);
+        if (tileSelector_.swapTiles(hand_, flop_)) {
+            this->dealContainer(flop_, Constants::FLOP_YPOS, Constants::FLOPSIZE);
+            setState(GameState::DEALING);
+        }
     });
 
     // auto judgeHandButton, state scoring
+    /*
+    auto scorerButton = std::make_unique<Button>(
+        sf::Vector2f(20, 20),
+        textures_.load("score_button"),
+        "score!",
+        fonts_.load("balatro"),
+        std::vector<GameState>{GameState::DEALING, GameState::SCORING}
+    );
+    scorerButton->setOnClick([this]() {
+        std::cout << "score button clicked! Current state: " << static_cast<int>(currState_) << "\n";
+        std::cout << this->scorer_.score(hand, Constants::HANDSIZE) << endl;
+        setState(GameState::DEALING);
+    })
+    */
 
     buttons_.push_back(std::move(startGameButton));
     buttons_.push_back(std::move(dealHandButton));

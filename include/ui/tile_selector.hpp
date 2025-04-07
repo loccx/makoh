@@ -15,7 +15,7 @@ public:
         std::vector<Tile>& hand_,
         std::vector<Tile>& flop_
     );
-    void swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_);
+    bool swapTiles(std::vector<Tile>& hand_, std::vector<Tile>& flop_);
     void clearSelections();
 
 private:

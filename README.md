@@ -62,3 +62,27 @@ was considering making tilecontainer but that seems to be overengineering;
 using vector over unorderedset for some of these operations since linear scan on such small sets of data should be faster than the constant overhead of hashing
 
 optimize tile selection with bitset viable tbh
+
+TODO:
+done - swap once per flop, flp resets after swap
+scoring button, get score and evaluate beauty of the hand
+    hand rn is just vector
+    score can be calculated .......
+
+idea 1:
+    traditional 3 x 3 x 3 x 2 scoring check
+    design this ^ to be scalable to idea 2
+
+idea 2:
+    longest straight >= 3, many types of same kind >= 3, whatever
+
+1. check 3x3x3x2
+2. check types of straights and 3 of a kind for the win
+
+
+scoring design ideas:
+unordered set of types?
+    type counter works for quick flush checks
+unordered_map check?
+
+lowkey you can just sort the vector... it's like 13 tiles
